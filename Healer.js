@@ -11,13 +11,14 @@ var attack_mode=true
 setInterval(function(){
 	set_message("loop begin");
 	
-	//stops wasting so many health pots
-	
+	//Check if health pot is needed and use it
 	if (character.hp < (character.max_hp * 0.4))
 		{
 			set_message("Healing");
 			parent.use('hp');
 		}
+
+    //Check if mana pot is needed and use it    
 	if (character.mp < (character.max_mp * 0.4))
 		{
 			set_message("Restoring Mana");
