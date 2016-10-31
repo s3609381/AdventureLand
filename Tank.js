@@ -3,29 +3,20 @@
 // If you don't know how to code, don't worry, It's easy.
 // Just set attack_mode to true and ENGAGE!
 
-var attack_mode=false
+var attack_mode=true
 
 setInterval(function(){
 
+	//stops wasting so many health pots
 	
 	//Check if health pot is needed and use it
-	if (character.hp < (character.max_hp * 0.4))
-		{
-			set_message("Healing");
-			parent.use('hp');
-		}
-
-    //Check if mana pot is needed and use it    
-	if (character.mp < (character.max_mp * 0.4))
-		{
-			set_message("Restoring Mana");
-			parent.use('mp');
-		}
+	useHealthPot()
+	//Check if mana pot is needed and use it
+	useManaPot()
 	
-    //loot
+	//scan for lootboxes on the screen and loot them
 	loot();
 
-    //Attack Loop
 	if(!attack_mode || character.moving) return;
 
 	var target=get_targeted_monster();
@@ -39,6 +30,8 @@ setInterval(function(){
 			return;
 		}
 	}
+	
+	
 	
 	if(!in_attack_range(target))
 	{
@@ -54,6 +47,27 @@ setInterval(function(){
 		attack(target);
 	}
 
-},1000/4); 
+},1000/4); // Loops every 1/4 seconds.
 
-// Loops every 1/4 seconds.
+// **********************
+//FUNCTION LIBRARY
+// **********************
+
+function useHealthPot() 
+{
+	if (character.hp < (character.max_hp * 0.4))
+	{
+		set_message("Using Health Potion");
+		parent.use('hp');
+	}	
+}
+
+function useManaPot()
+{
+    //Check if mana pot is needed and use it    
+	if (character.mp < (character.max_mp * 0.4))
+		{
+			set_message("Using Mana Potion");
+			parent.use('mp');
+		}
+}	
